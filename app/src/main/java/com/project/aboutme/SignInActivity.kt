@@ -6,6 +6,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -17,6 +19,18 @@ class SignInActivity : AppCompatActivity() {
 
     private lateinit var loginButton: Button
     private lateinit var signUpButton: Button
+
+    private val startForResult = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result: ActivityResult ->
+        if (result.resultCode == RESULT_OK) {
+            val id = result.data?.getStringExtra("id")!!
+            val pwd = result.data?.getStringExtra("pwd")!!
+
+            idEditText.setText(id)
+            pwdEditText.setText(pwd)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +61,7 @@ class SignInActivity : AppCompatActivity() {
         }
         signUpButton.setOnClickListener {
             val toSignUp = Intent(this, SignUpActivity::class.java)
-            startActivity(toSignUp)
+            startForResult.launch(toSignUp)
         }
     }
 }
