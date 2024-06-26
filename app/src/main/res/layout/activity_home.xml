@@ -262,24 +262,42 @@
         </com.google.android.material.chip.ChipGroup>
     </LinearLayout>
 
-
-
-    <Button
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/finish_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/hobby_line"
 
-        android:layout_marginHorizontal="40dp"
-        android:layout_marginBottom="60dp"
+        android:background="@drawable/button_decoration"
 
-        android:text="종료"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        />
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        >
+
+        <TextView
+            android:id="@+id/button_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:drawableLeftCompat="@drawable/thumbs"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+
+
+            android:text="종료"
+            android:textColor="@color/text_decoration"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
