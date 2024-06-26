@@ -3,6 +3,7 @@ package com.project.aboutme
 import android.graphics.drawable.Drawable
 import android.media.Image
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -17,7 +18,7 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var imageView: ImageView
     private lateinit var idText: TextView
-    private lateinit var finishButton: Button
+    private lateinit var finishButton: View
 
     private val images = mutableListOf<Drawable>()
 
