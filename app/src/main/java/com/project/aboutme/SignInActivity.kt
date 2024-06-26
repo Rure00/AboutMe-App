@@ -1,6 +1,7 @@
 package com.project.aboutme
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -8,6 +9,7 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -19,19 +21,20 @@ class SignInActivity : AppCompatActivity() {
 
     private lateinit var loginButton: Button
     private lateinit var signUpButton: Button
+    private var userData: UserData? = null
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private val startForResult = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result: ActivityResult ->
         if (result.resultCode == RESULT_OK) {
-            val id = result.data?.getStringExtra("id")!!
-            val pwd = result.data?.getStringExtra("pwd")!!
-
-            idEditText.setText(id)
-            pwdEditText.setText(pwd)
+            userData = result.data?.getParcelableExtra("user_data", UserData::class.java)
+            idEditText.setText(userData!!.id)
+            pwdEditText.setText(userData!!.pwd)
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -54,8 +57,11 @@ class SignInActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
 
-                val intent = Intent(this, HomeActivity::class.java)
-                intent.putExtra("id", idEditText.text.toString())
+                val intent = Intent(this, HomeActivity::class.java).apply {
+                    putExtra("user_data", userData ?: UserData(
+                        "", idEditText.text.toString(), pwdEditText.text.toString()
+                    ))
+                }
                 startActivity(intent)
             }
         }
